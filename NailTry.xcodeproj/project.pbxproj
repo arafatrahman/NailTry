@@ -1,0 +1,664 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		70272C952EFB570600DF6DBE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 70272C942EFB570600DF6DBE /* FirebaseAuth */; };
+		70272C972EFB570600DF6DBE /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 70272C962EFB570600DF6DBE /* FirebaseCore */; };
+		70272C992EFB570600DF6DBE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 70272C982EFB570600DF6DBE /* FirebaseDatabase */; };
+		70272C9B2EFB570600DF6DBE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 70272C9A2EFB570600DF6DBE /* FirebaseFirestore */; };
+		70272C9D2EFB570600DF6DBE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 70272C9C2EFB570600DF6DBE /* FirebaseStorage */; };
+		70272CA22EFB5AE700DF6DBE /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 70272CA12EFB5AE700DF6DBE /* GoogleGenerativeAI */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		70272C562EFB536100DF6DBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70272C402EFB536000DF6DBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70272C472EFB536000DF6DBE;
+			remoteInfo = NailTry;
+		};
+		70272C602EFB536100DF6DBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70272C402EFB536000DF6DBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70272C472EFB536000DF6DBE;
+			remoteInfo = NailTry;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		70272C482EFB536000DF6DBE /* NailTry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NailTry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		70272C552EFB536100DF6DBE /* NailTryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NailTryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		70272C5F2EFB536100DF6DBE /* NailTryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NailTryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		70272C4A2EFB536000DF6DBE /* NailTry */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NailTry;
+			sourceTree = "<group>";
+		};
+		70272C582EFB536100DF6DBE /* NailTryTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NailTryTests;
+			sourceTree = "<group>";
+		};
+		70272C622EFB536100DF6DBE /* NailTryUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NailTryUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		70272C452EFB536000DF6DBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70272C992EFB570600DF6DBE /* FirebaseDatabase in Frameworks */,
+				70272C9B2EFB570600DF6DBE /* FirebaseFirestore in Frameworks */,
+				70272C972EFB570600DF6DBE /* FirebaseCore in Frameworks */,
+				70272CA22EFB5AE700DF6DBE /* GoogleGenerativeAI in Frameworks */,
+				70272C9D2EFB570600DF6DBE /* FirebaseStorage in Frameworks */,
+				70272C952EFB570600DF6DBE /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C522EFB536100DF6DBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C5C2EFB536100DF6DBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		70272C3F2EFB536000DF6DBE = {
+			isa = PBXGroup;
+			children = (
+				70272C4A2EFB536000DF6DBE /* NailTry */,
+				70272C582EFB536100DF6DBE /* NailTryTests */,
+				70272C622EFB536100DF6DBE /* NailTryUITests */,
+				70272C492EFB536000DF6DBE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		70272C492EFB536000DF6DBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				70272C482EFB536000DF6DBE /* NailTry.app */,
+				70272C552EFB536100DF6DBE /* NailTryTests.xctest */,
+				70272C5F2EFB536100DF6DBE /* NailTryUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		70272C472EFB536000DF6DBE /* NailTry */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70272C692EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTry" */;
+			buildPhases = (
+				70272C442EFB536000DF6DBE /* Sources */,
+				70272C452EFB536000DF6DBE /* Frameworks */,
+				70272C462EFB536000DF6DBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				70272C4A2EFB536000DF6DBE /* NailTry */,
+			);
+			name = NailTry;
+			packageProductDependencies = (
+				70272C942EFB570600DF6DBE /* FirebaseAuth */,
+				70272C962EFB570600DF6DBE /* FirebaseCore */,
+				70272C982EFB570600DF6DBE /* FirebaseDatabase */,
+				70272C9A2EFB570600DF6DBE /* FirebaseFirestore */,
+				70272C9C2EFB570600DF6DBE /* FirebaseStorage */,
+				70272CA12EFB5AE700DF6DBE /* GoogleGenerativeAI */,
+			);
+			productName = NailTry;
+			productReference = 70272C482EFB536000DF6DBE /* NailTry.app */;
+			productType = "com.apple.product-type.application";
+		};
+		70272C542EFB536100DF6DBE /* NailTryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70272C6C2EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTryTests" */;
+			buildPhases = (
+				70272C512EFB536100DF6DBE /* Sources */,
+				70272C522EFB536100DF6DBE /* Frameworks */,
+				70272C532EFB536100DF6DBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70272C572EFB536100DF6DBE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				70272C582EFB536100DF6DBE /* NailTryTests */,
+			);
+			name = NailTryTests;
+			packageProductDependencies = (
+			);
+			productName = NailTryTests;
+			productReference = 70272C552EFB536100DF6DBE /* NailTryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		70272C5E2EFB536100DF6DBE /* NailTryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70272C6F2EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTryUITests" */;
+			buildPhases = (
+				70272C5B2EFB536100DF6DBE /* Sources */,
+				70272C5C2EFB536100DF6DBE /* Frameworks */,
+				70272C5D2EFB536100DF6DBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70272C612EFB536100DF6DBE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				70272C622EFB536100DF6DBE /* NailTryUITests */,
+			);
+			name = NailTryUITests;
+			packageProductDependencies = (
+			);
+			productName = NailTryUITests;
+			productReference = 70272C5F2EFB536100DF6DBE /* NailTryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		70272C402EFB536000DF6DBE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					70272C472EFB536000DF6DBE = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					70272C542EFB536100DF6DBE = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = 70272C472EFB536000DF6DBE;
+					};
+					70272C5E2EFB536100DF6DBE = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = 70272C472EFB536000DF6DBE;
+					};
+				};
+			};
+			buildConfigurationList = 70272C432EFB536000DF6DBE /* Build configuration list for PBXProject "NailTry" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 70272C3F2EFB536000DF6DBE;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				70272CA02EFB5AE700DF6DBE /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 70272C492EFB536000DF6DBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				70272C472EFB536000DF6DBE /* NailTry */,
+				70272C542EFB536100DF6DBE /* NailTryTests */,
+				70272C5E2EFB536100DF6DBE /* NailTryUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		70272C462EFB536000DF6DBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C532EFB536100DF6DBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C5D2EFB536100DF6DBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		70272C442EFB536000DF6DBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C512EFB536100DF6DBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70272C5B2EFB536100DF6DBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		70272C572EFB536100DF6DBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70272C472EFB536000DF6DBE /* NailTry */;
+			targetProxy = 70272C562EFB536100DF6DBE /* PBXContainerItemProxy */;
+		};
+		70272C612EFB536100DF6DBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70272C472EFB536000DF6DBE /* NailTry */;
+			targetProxy = 70272C602EFB536100DF6DBE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		70272C672EFB536100DF6DBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		70272C682EFB536100DF6DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		70272C6A2EFB536100DF6DBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "NailTry needs camera access to capture your hand for the preview.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NailTry needs photo access to select your hand image.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		70272C6B2EFB536100DF6DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "NailTry needs camera access to capture your hand for the preview.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "NailTry needs photo access to select your hand image.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		70272C6D2EFB536100DF6DBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai.NailTryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NailTry.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NailTry";
+			};
+			name = Debug;
+		};
+		70272C6E2EFB536100DF6DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai.NailTryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NailTry.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NailTry";
+			};
+			name = Release;
+		};
+		70272C702EFB536100DF6DBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai.NailTryUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NailTry;
+			};
+			name = Debug;
+		};
+		70272C712EFB536100DF6DBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = N74D443G5Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webbird.nailvisionai.NailTryUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NailTry;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		70272C432EFB536000DF6DBE /* Build configuration list for PBXProject "NailTry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70272C672EFB536100DF6DBE /* Debug */,
+				70272C682EFB536100DF6DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70272C692EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70272C6A2EFB536100DF6DBE /* Debug */,
+				70272C6B2EFB536100DF6DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70272C6C2EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70272C6D2EFB536100DF6DBE /* Debug */,
+				70272C6E2EFB536100DF6DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70272C6F2EFB536100DF6DBE /* Build configuration list for PBXNativeTarget "NailTryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70272C702EFB536100DF6DBE /* Debug */,
+				70272C712EFB536100DF6DBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
+		70272CA02EFB5AE700DF6DBE /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70272C942EFB570600DF6DBE /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		70272C962EFB570600DF6DBE /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		70272C982EFB570600DF6DBE /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		70272C9A2EFB570600DF6DBE /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		70272C9C2EFB570600DF6DBE /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272C932EFB570600DF6DBE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		70272CA12EFB5AE700DF6DBE /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 70272CA02EFB5AE700DF6DBE /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 70272C402EFB536000DF6DBE /* Project object */;
+}
