@@ -2,39 +2,55 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+import FirebaseAuth
 
 class DataService: ObservableObject {
     @Published var designs: [NailDesign] = []
+    @Published var favoriteIds: Set<String> = []
     
     private let db = Firestore.firestore()
+    private var userId: String? { Auth.auth().currentUser?.uid }
+    
+    init() {
+        fetchDesigns()
+        fetchFavorites()
+    }
     
     func fetchDesigns() {
-        print("🔥 Fetching designs from Firestore...")
-        
         db.collection("nail_styles").getDocuments { [weak self] snapshot, error in
-            
-            // 1. Handle Error (Network issues, permission denied)
-            if let error = error {
-                print("❌ Firestore Error: \(error.localizedDescription)")
-                self?.loadSamples()
-                return
-            }
-            
-            // 2. Handle Success
             if let docs = snapshot?.documents, !docs.isEmpty {
-                print("✅ Found \(docs.count) designs in Firestore.")
                 self?.designs = docs.compactMap { try? $0.data(as: NailDesign.self) }
             } else {
-                // 3. Handle Empty Database (Load Samples)
-                print("⚠️ Firestore is empty. Loading sample data.")
                 self?.loadSamples()
             }
         }
     }
     
-    // Helper to load hardcoded samples so the screen isn't blank
+    func fetchFavorites() {
+        guard let uid = userId else { return }
+        db.collection("users").document(uid).collection("favorites").addSnapshotListener { [weak self] snapshot, error in
+            guard let self = self, let docs = snapshot?.documents else { return }
+            self.favoriteIds = Set(docs.map { $0.documentID })
+        }
+    }
+    
+    func toggleFavorite(design: NailDesign) {
+        guard let uid = userId, let designId = design.id else { return }
+        let docRef = db.collection("users").document(uid).collection("favorites").document(designId)
+        
+        if favoriteIds.contains(designId) {
+            docRef.delete()
+        } else {
+            docRef.setData(["addedAt": Date(), "designId": designId])
+        }
+    }
+    
+    func isFavorite(_ design: NailDesign) -> Bool {
+        guard let id = design.id else { return false }
+        return favoriteIds.contains(id)
+    }
+    
     private func loadSamples() {
         self.designs = NailDesign.samples
-        print("📂 Loaded \(self.designs.count) sample designs.")
     }
 }

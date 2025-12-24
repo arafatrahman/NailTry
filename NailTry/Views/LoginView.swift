@@ -5,98 +5,115 @@ import AuthenticationServices
 struct LoginView: View {
     @EnvironmentObject var authService: AuthService
     
+    @State private var isLoginMode = true
+    @State private var email = ""
+    @State private var password = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
     
     var body: some View {
-        ZStack {
-            // Background
-            Color.pink.opacity(0.1).ignoresSafeArea()
-            
-            VStack(spacing: 30) {
-                // --- Logo Area ---
-                VStack(spacing: 10) {
-                    Image(systemName: "sparkles")
-                        .font(.system(size: 80))
-                        .foregroundColor(.pink)
-                    
-                    Text("NailTry")
-                        .font(.system(size: 40, weight: .bold, design: .rounded))
-                    
-                    Text("Virtual Nail Salon")
-                        .foregroundColor(.gray)
-                }
-                .padding(.top, 50)
+        NavigationView {
+            ZStack {
+                Color.pink.opacity(0.05).ignoresSafeArea()
                 
-                Spacer()
-                
-                // --- Error Message Display ---
-                if let error = errorMessage {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
+                ScrollView {
+                    VStack(spacing: 25) {
+                        // Header
+                        VStack(spacing: 10) {
+                            Image(systemName: "sparkles")
+                                .font(.system(size: 60))
+                                .foregroundColor(.pink)
+                            Text("NailTry")
+                                .font(.largeTitle)
+                                .bold()
+                        }
+                        .padding(.top, 40)
+                        
+                        // Picker
+                        Picker("Mode", selection: $isLoginMode) {
+                            Text("Log In").tag(true)
+                            Text("Register").tag(false)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
                         .padding(.horizontal)
-                        .padding(.bottom, 10)
-                }
-                
-                // --- Buttons ---
-                if isLoading {
-                    ProgressView("Signing in...")
-                        .tint(.pink)
-                } else {
-                    VStack(spacing: 16) {
-                        // 1. Apple Sign In
+                        
+                        // Fields
+                        VStack(spacing: 15) {
+                            TextField("Email", text: $email)
+                                .keyboardType(.emailAddress)
+                                .autocapitalization(.none)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                            
+                            SecureField("Password", text: $password)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        
+                        if let error = errorMessage {
+                            Text(error).foregroundColor(.red).font(.caption)
+                        }
+                        
+                        // Action Button
+                        Button(action: handleEmailAuth) {
+                            if isLoading {
+                                ProgressView().tint(.white)
+                            } else {
+                                Text(isLoginMode ? "Log In" : "Create Account")
+                                    .bold()
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.pink)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                        .disabled(isLoading || email.isEmpty || password.isEmpty)
+                        
+                        Text("OR").foregroundColor(.gray).font(.caption)
+                        
+                        // Apple Sign In
                         SignInWithAppleButton(.signIn) { request in
                             request.requestedScopes = [.fullName, .email]
                         } onCompletion: { result in
-                            switch result {
-                            case .success(_):
-                                print("Apple Login Successful")
-                                // Real app: Pass credentials to Firebase here
-                            case .failure(let error):
-                                errorMessage = error.localizedDescription
-                            }
+                            // Handle Apple Auth (Placeholder)
+                            print("Apple Sign In Result: \(result)")
                         }
                         .frame(height: 50)
-                        .frame(maxWidth: 375) // 👈 FIX: Apple strictly limits width to 375 max
-                        .cornerRadius(12)
+                        .cornerRadius(10)
                         .padding(.horizontal)
                         
-                        // 2. Guest Login
-                        Button(action: handleGuestLogin) {
-                            Text("Continue as Guest")
-                                .font(.headline)
-                                .foregroundColor(.pink)
-                                .frame(maxWidth: .infinity) // Standard buttons can stretch infinitely
-                                .frame(height: 50)
-                                .background(Color.white)
-                                .cornerRadius(12)
-                                .shadow(radius: 2)
+                        // Guest
+                        Button("Continue as Guest") {
+                            authService.signInAnonymously { _ in }
                         }
-                        .frame(maxWidth: 375) // Match the Apple button width for symmetry
-                        .padding(.horizontal)
+                        .foregroundColor(.gray)
+                        .padding(.top)
                     }
-                    .padding(.bottom, 50)
+                    .padding()
                 }
             }
+            .navigationBarHidden(true)
         }
     }
     
-    // Logic to handle the Guest button tap
-    func handleGuestLogin() {
-        print("👆 Guest button tapped")
+    func handleEmailAuth() {
         isLoading = true
         errorMessage = nil
         
-        // Call service with completion handler
-        authService.signInAnonymously { error in
-            DispatchQueue.main.async {
-                self.isLoading = false
-                
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
-                }
+        if isLoginMode {
+            authService.signIn(email: email, pass: password) { error in
+                isLoading = false
+                if let error = error { errorMessage = error.localizedDescription }
+            }
+        } else {
+            authService.signUp(email: email, pass: password) { error in
+                isLoading = false
+                if let error = error { errorMessage = error.localizedDescription }
             }
         }
     }
