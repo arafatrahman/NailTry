@@ -6,6 +6,7 @@ import Combine
 class AuthService: ObservableObject {
     @Published var user: User?
     @Published var isGuest: Bool = false
+    @Published var isPremium: Bool = false // New: Tracks subscription status
     
     private var authHandle: AuthStateDidChangeListenerHandle?
     
@@ -19,6 +20,8 @@ class AuthService: ObservableObject {
             DispatchQueue.main.async {
                 self?.user = user
                 self?.isGuest = user?.isAnonymous ?? false
+                // Logic to determine premium status can go here later (e.g. check Firestore)
+                // For now, it defaults to false (Free)
             }
         }
     }
@@ -48,6 +51,7 @@ class AuthService: ObservableObject {
     func signOut() {
         do {
             try Auth.auth().signOut()
+            self.isPremium = false // Reset premium on sign out
         } catch {
             print("❌ Sign out error: \(error.localizedDescription)")
         }
@@ -62,7 +66,6 @@ class AuthService: ObservableObject {
             if let error = error {
                 completion(error)
             } else {
-                // Successful deletion, sign out explicitly to update UI state
                 self.signOut()
                 completion(nil)
             }
