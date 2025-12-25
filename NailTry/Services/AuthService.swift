@@ -52,4 +52,20 @@ class AuthService: ObservableObject {
             print("❌ Sign out error: \(error.localizedDescription)")
         }
     }
+    
+    // MARK: - Account Deletion
+    
+    func deleteAccount(completion: @escaping (Error?) -> Void) {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        user.delete { error in
+            if let error = error {
+                completion(error)
+            } else {
+                // Successful deletion, sign out explicitly to update UI state
+                self.signOut()
+                completion(nil)
+            }
+        }
+    }
 }

@@ -18,6 +18,11 @@ struct MainTabView: View {
                 .tabItem {
                     Label("Profile", systemImage: "person.circle.fill")
                 }
+            
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
         }
         .accentColor(.pink)
     }

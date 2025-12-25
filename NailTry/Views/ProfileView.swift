@@ -1,21 +1,23 @@
 // Views/ProfileView.swift
 import SwiftUI
-import FirebaseAuth // 👈 Added this import to fix the 'email' property error
+import FirebaseAuth
 
 struct ProfileView: View {
     @EnvironmentObject var authService: AuthService
     @State private var showPremium = false
+    @State private var showingDeleteAlert = false
+    @State private var deleteErrorMessage: String?
     
     var body: some View {
         NavigationView {
             List {
+                // Section 1: User Info
                 Section(header: Text("Account")) {
                     HStack {
                         Image(systemName: "person.crop.circle.fill")
-                            .font(.system(size: 40))
+                            .font(.system(size: 50))
                             .foregroundColor(.gray)
-                        VStack(alignment: .leading) {
-                            // Now accessible because FirebaseAuth is imported
+                        VStack(alignment: .leading, spacing: 4) {
                             Text(authService.user?.email ?? "Guest User")
                                 .font(.headline)
                             
@@ -23,41 +25,55 @@ struct ProfileView: View {
                                 Text("Anonymous Account")
                                     .font(.caption)
                                     .foregroundColor(.orange)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.orange.opacity(0.1))
+                                    .cornerRadius(4)
+                            } else {
+                                Text("Free Member")
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
                             }
                         }
                     }
                     .padding(.vertical, 8)
                 }
                 
-                Section(header: Text("Subscription")) {
-                    HStack {
-                        Label("Premium Status", systemImage: "crown.fill")
-                            .foregroundColor(.yellow)
-                        Spacer()
-                        Text("Free")
-                            .foregroundColor(.gray)
+                // Section 2: Premium Benefits List
+                Section(header: Text("Premium Benefits")) {
+                    Button(action: { showPremium = true }) {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Label("Upgrade to Premium", systemImage: "crown.fill")
+                                    .font(.headline)
+                                    .foregroundColor(.pink)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                                    .font(.caption)
+                            }
+                            
+                            // Bullet points
+                            VStack(alignment: .leading, spacing: 5) {
+                                BenefitPoint(text: "Unlimited AI Try-On generations")
+                                BenefitPoint(text: "Access to exclusive seasonal designs")
+                                BenefitPoint(text: "High-resolution downloads")
+                                BenefitPoint(text: "Priority processing speed")
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                }
+                
+                // Section 3: Danger Zone
+                Section(header: Text("Danger Zone")) {
+                    Button(action: { authService.signOut() }) {
+                        Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+                            .foregroundColor(.primary)
                     }
                     
-                    Button("Upgrade to Premium") {
-                        showPremium = true
-                    }
-                    .foregroundColor(.pink)
-                }
-                
-                Section(header: Text("Settings")) {
-                    NavigationLink(destination: Text("Privacy Policy")) {
-                        Label("Privacy Policy", systemImage: "hand.raised")
-                    }
-                    Button(action: {
-                        // Clear cache logic placeholder
-                    }) {
-                        Label("Clear Cache", systemImage: "trash")
-                    }
-                }
-                
-                Section {
-                    Button(action: { authService.signOut() }) {
-                        Text("Sign Out")
+                    Button(action: { showingDeleteAlert = true }) {
+                        Label("Delete Account", systemImage: "trash")
                             .foregroundColor(.red)
                     }
                 }
@@ -66,10 +82,32 @@ struct ProfileView: View {
             .sheet(isPresented: $showPremium) {
                 PremiumView()
             }
+            .alert("Delete Account", isPresented: $showingDeleteAlert) {
+                Button("Cancel", role: .cancel) { }
+                Button("Delete", role: .destructive) {
+                    deleteAccount()
+                }
+            } message: {
+                Text("Are you sure? This action cannot be undone and all your data will be permanently lost.")
+            }
+            .alert("Error", isPresented: .constant(deleteErrorMessage != nil)) {
+                Button("OK") { deleteErrorMessage = nil }
+            } message: {
+                Text(deleteErrorMessage ?? "Unknown error")
+            }
+        }
+    }
+    
+    func deleteAccount() {
+        authService.deleteAccount { error in
+            if let error = error {
+                deleteErrorMessage = error.localizedDescription
+            }
         }
     }
 }
 
+// MARK: - Premium Sheet View
 struct PremiumView: View {
     @Environment(\.presentationMode) var presentationMode
     
@@ -107,6 +145,8 @@ struct PremiumView: View {
     }
 }
 
+// MARK: - Helper Components
+
 struct FeatureRow: View {
     let icon: String
     let text: String
@@ -118,6 +158,21 @@ struct FeatureRow: View {
                 .frame(width: 30)
             Text(text)
                 .font(.headline)
+        }
+    }
+}
+
+struct BenefitPoint: View {
+    let text: String
+    var body: some View {
+        HStack(alignment: .top) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+                .font(.system(size: 12))
+                .padding(.top, 2)
+            Text(text)
+                .font(.subheadline)
+                .foregroundColor(.gray)
         }
     }
 }
