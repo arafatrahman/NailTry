@@ -1,5 +1,6 @@
 // Views/HomeView.swift
 import SwiftUI
+import Combine // Imported for Timer
 
 struct HomeView: View {
     @EnvironmentObject var authService: AuthService
@@ -17,9 +18,9 @@ struct HomeView: View {
         designsByCategory.keys.sorted()
     }
     
-    // Take the first 5 designs for the Header Slider
+    // UPDATED: Filter logic to show only designs where isFeatured == true
     var featuredDesigns: [NailDesign] {
-        Array(dataService.designs.prefix(5))
+        dataService.designs.filter { $0.isFeatured ?? false }
     }
 
     var body: some View {
@@ -75,19 +76,28 @@ struct HeroCarousel: View {
     var onRequestPremium: () -> Void
     @EnvironmentObject var authService: AuthService
     
+    // UPDATED: State for auto-sliding
+    @State private var currentIndex = 0
+    // UPDATED: Timer publisher for 2-second intervals
+    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    
     var body: some View {
-        TabView {
-            ForEach(designs) { design in
-                // Logic: Block navigation if Premium needed & User is Free
-                if design.isPremium && !authService.isPremium {
-                    Button(action: onRequestPremium) {
-                        HeroCardContent(design: design)
-                    }
-                } else {
-                    NavigationLink(destination: NailDetailView(design: design)) {
-                        HeroCardContent(design: design)
+        TabView(selection: $currentIndex) {
+            // Enumerated allows us to tag each view with its index for the binding
+            ForEach(Array(designs.enumerated()), id: \.element) { index, design in
+                Group {
+                    // Logic: Block navigation if Premium needed & User is Free
+                    if design.isPremium && !authService.isPremium {
+                        Button(action: onRequestPremium) {
+                            HeroCardContent(design: design)
+                        }
+                    } else {
+                        NavigationLink(destination: NailDetailView(design: design)) {
+                            HeroCardContent(design: design)
+                        }
                     }
                 }
+                .tag(index) // Important for TabView selection to work
             }
         }
         .frame(height: 340)
@@ -95,6 +105,13 @@ struct HeroCarousel: View {
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = .white
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.white.withAlphaComponent(0.3)
+        }
+        // UPDATED: Receive timer events to change the index
+        .onReceive(timer) { _ in
+            withAnimation {
+                // Determine next index, loop back to 0 if at the end
+                currentIndex = (currentIndex + 1) % designs.count
+            }
         }
     }
 }
