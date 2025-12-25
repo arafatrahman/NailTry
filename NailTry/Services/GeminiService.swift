@@ -9,17 +9,29 @@ class GeminiService {
 
     init() {}
 
-    func generateNailPreview(originalImage: UIImage, designPrompt: String) async throws -> UIImage {
-        // 1. Resize & Compress
-        // Resize to 1024 to respect model limits and improve speed
-        guard let resizedImage = originalImage.resized(to: 1024),
+    // CHANGED: Added isPremium parameter to control resolution and speed
+    func generateNailPreview(originalImage: UIImage, designPrompt: String, isPremium: Bool) async throws -> UIImage {
+        
+        // 1. Resolution & Speed Logic
+        // Free: 512px (Low Res), Premium: 1024px (High Res)
+        let targetResolution: CGFloat = isPremium ? 1024 : 512
+        
+        // Free: Simulate "Standard" processing queue (Slower)
+        // Premium: "Priority" processing (Instant)
+        if !isPremium {
+            print("⏳ Free account: Simulating standard processing speed...")
+            try? await Task.sleep(nanoseconds: 2 * 1_000_000_000) // 2 second delay
+        }
+        
+        // 2. Resize & Compress
+        guard let resizedImage = originalImage.resized(to: targetResolution),
               let jpegData = resizedImage.jpegData(compressionQuality: 0.8) else {
             throw NSError(domain: "ImageError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to process image"])
         }
         
         let base64Image = jpegData.base64EncodedString()
 
-        // 2. Prompt
+        // 3. Prompt
         let promptText = """
         Technical demonstration: Apply a virtual nail polish design.
         Input: A photo of a hand.
@@ -27,8 +39,7 @@ class GeminiService {
         Requirements: Keep the image photorealistic. Preserve the original hand structure.
         """
         
-        // 3. Request Body
-        // We set safety settings to BLOCK_ONLY_HIGH to allow hand editing without false positives.
+        // 4. Request Body
         let requestBody: [String: Any] = [
             "contents": [
                 [
@@ -51,7 +62,7 @@ class GeminiService {
             ]
         ]
 
-        // 4. URL Request
+        // 5. URL Request
         guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/\(modelName):generateContent?key=\(apiKey)") else {
             throw NSError(domain: "NetworkError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid API URL"])
         }
@@ -61,10 +72,10 @@ class GeminiService {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
 
-        // 5. Perform Request
+        // 6. Perform Request
         let (data, response) = try await URLSession.shared.data(for: request)
 
-        // 6. Handle HTTP Errors
+        // 7. Handle HTTP Errors
         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             if let errorJson = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                let errorObj = errorJson["error"] as? [String: Any],
@@ -75,14 +86,13 @@ class GeminiService {
             throw NSError(domain: "GeminiAPI", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Server error \(httpResponse.statusCode)"])
         }
 
-        // 7. Parse Response
+        // 8. Parse Response
         guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             throw NSError(domain: "ParsingError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid JSON"])
         }
 
         guard let candidates = json["candidates"] as? [[String: Any]],
               let firstCandidate = candidates.first else {
-            // Check for Block Reason
             if let promptFeedback = json["promptFeedback"] as? [String: Any],
                let blockReason = promptFeedback["blockReason"] as? String {
                 throw NSError(domain: "SafetyError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Blocked by prompt filter: \(blockReason)"])
@@ -90,12 +100,11 @@ class GeminiService {
             throw NSError(domain: "AIError", code: 1, userInfo: [NSLocalizedDescriptionKey: "No candidates returned."])
         }
 
-        // 8. Extract Image (Robust Parsing)
+        // 9. Extract Image
         if let content = firstCandidate["content"] as? [String: Any],
            let parts = content["parts"] as? [[String: Any]] {
             
             for part in parts {
-                // FIX: Check BOTH "inline_data" (standard) AND "inlineData" (camelCase)
                 let inlinePart = (part["inline_data"] as? [String: Any]) ?? (part["inlineData"] as? [String: Any])
                 
                 if let inlineData = inlinePart,
@@ -103,14 +112,13 @@ class GeminiService {
                    let imageData = Data(base64Encoded: base64String),
                    let finalImage = UIImage(data: imageData) {
                     
-                    print("✅ Successfully decoded image!")
+                    print("✅ Successfully decoded image! (Premium: \(isPremium))")
                     return finalImage
                 }
             }
         }
 
-        // If we get here, log the full response to help debug further
-        print("⚠️ Response contained no image data. Full JSON: \(String(data: data, encoding: .utf8) ?? "nil")")
+        print("⚠️ Response contained no image data.")
         throw NSError(domain: "AIError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Model returned success but no image found."])
     }
 }

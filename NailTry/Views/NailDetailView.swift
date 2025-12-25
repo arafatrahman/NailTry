@@ -4,6 +4,8 @@ import PhotosUI
 
 struct NailDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    // CHANGED: Access AuthService to check premium status
+    @EnvironmentObject var authService: AuthService
     
     let design: NailDesign
     @State private var inputImage: UIImage?
@@ -211,7 +213,12 @@ struct NailDetailView: View {
         
         Task {
             do {
-                let result = try await aiService.generateNailPreview(originalImage: hand, designPrompt: design.prompt)
+                // CHANGED: Pass isPremium to GeminiService
+                let result = try await aiService.generateNailPreview(
+                    originalImage: hand,
+                    designPrompt: design.prompt,
+                    isPremium: authService.isPremium
+                )
                 
                 await MainActor.run {
                     withAnimation(.easeOut(duration: 0.5)) {
@@ -351,7 +358,7 @@ struct SmoothBeforeAfterSlider: View {
     }
 }
 
-// Gradient Loader (Same as before)
+// Gradient Loader
 struct MagicGradientLoader: View {
     @State private var rotation: Double = 0
     @State private var scale: CGFloat = 1.0
