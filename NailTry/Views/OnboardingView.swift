@@ -2,89 +2,158 @@
 import SwiftUI
 
 struct OnboardingView: View {
-    // Renamed for clarity: logic was inverted previously
+    // Binding to control the visibility state in RootView
     @Binding var isOnboardingCompleted: Bool
     @State private var currentPage = 0
     
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            // Background: Subtle Gradient to match app theme
+            LinearGradient(
+                colors: [Color.white, Color.pink.opacity(0.05)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             
             VStack {
+                // MARK: - Swipeable Content
                 TabView(selection: $currentPage) {
-                    OnboardingPage(image: "hand.draw", title: "Virtual Try-On", description: "Try nail art before applying — virtually using AI.")
-                        .tag(0)
+                    // Screen 1: Virtual Manicure
+                    OnboardingPage(
+                        imageName: "hand.raised.fill",
+                        title: "Virtual Manicure",
+                        description: "Snap a photo of your hand and instantly try on hundreds of stunning nail designs.",
+                        iconColor: .pink
+                    )
+                    .tag(0)
                     
-                    OnboardingPage(image: "wand.and.stars", title: "Realistic AI", description: "Advanced AI generates previews on your own hand.")
-                        .tag(1)
+                    // Screen 2: AI Realism
+                    OnboardingPage(
+                        imageName: "sparkles.rectangle.stack.fill",
+                        title: "AI-Powered Realism",
+                        description: "Our advanced Gemini AI adapts every polish to your unique hand shape and lighting.",
+                        iconColor: .purple
+                    )
+                    .tag(1)
                     
-                    OnboardingPage(image: "heart.fill", title: "Save Favorites", description: "Collect your favorite styles and unlock unlimited designs.")
-                        .tag(2)
+                    // Screen 3: Premium & Benefits
+                    OnboardingPage(
+                        imageName: "crown.fill",
+                        title: "Go Limitless",
+                        description: "Unlock exclusive premium styles, save your favorites, and enjoy unlimited generations.",
+                        iconColor: .yellow
+                    )
+                    .tag(2)
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                .animation(.easeInOut, value: currentPage)
                 
+                // MARK: - Navigation Controls
                 HStack {
+                    // Skip Button (Hidden on the last page)
                     if currentPage < 2 {
-                        Button("Skip") {
-                            completeOnboarding()
+                        Button(action: completeOnboarding) {
+                            Text("Skip")
+                                .foregroundColor(.gray)
+                                .font(.subheadline)
                         }
-                        .foregroundColor(.gray)
-                        
-                        Spacer()
-                        
-                        Button("Next") {
+                        .padding(.leading, 30)
+                    } else {
+                        // Spacer to maintain layout balance
+                        Spacer().frame(width: 60)
+                    }
+                    
+                    Spacer()
+                    
+                    // Next / Get Started Button
+                    if currentPage < 2 {
+                        Button(action: {
                             withAnimation { currentPage += 1 }
+                        }) {
+                            HStack {
+                                Text("Next")
+                                Image(systemName: "arrow.right")
+                            }
+                            .font(.headline)
+                            .foregroundColor(.pink)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
                         }
-                        .fontWeight(.bold)
-                        .foregroundColor(.pink)
+                        .padding(.trailing, 20)
                     } else {
                         Button(action: completeOnboarding) {
                             Text("Get Started")
-                                .fontWeight(.bold)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.pink)
+                                .font(.headline)
                                 .foregroundColor(.white)
-                                .cornerRadius(10)
+                                .padding(.vertical, 14)
+                                .padding(.horizontal, 40)
+                                .background(Color.pink)
+                                .clipShape(Capsule())
+                                .shadow(color: .pink.opacity(0.4), radius: 8, x: 0, y: 4)
                         }
+                        .padding(.trailing, 20)
                     }
                 }
-                .padding()
+                .padding(.bottom, 30)
             }
         }
+        .transition(.move(edge: .trailing))
     }
     
     func completeOnboarding() {
-        // Set to TRUE to indicate we have seen it
         withAnimation {
             isOnboardingCompleted = true
         }
     }
 }
 
+// MARK: - Reusable Page Component
 struct OnboardingPage: View {
-    let image: String
+    let imageName: String
     let title: String
     let description: String
+    let iconColor: Color
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: image)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 200)
-                .foregroundColor(.pink)
+        VStack(spacing: 40) {
+            Spacer()
             
-            Text(title)
-                .font(.title)
-                .bold()
+            // Animated Icon Container
+            ZStack {
+                Circle()
+                    .fill(iconColor.opacity(0.1))
+                    .frame(width: 220, height: 220)
+                
+                Circle()
+                    .stroke(iconColor.opacity(0.3), lineWidth: 2)
+                    .frame(width: 250, height: 250)
+                
+                Image(systemName: imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 100)
+                    .foregroundColor(iconColor)
+                    .shadow(color: iconColor.opacity(0.5), radius: 10, x: 0, y: 5)
+            }
             
-            Text(description)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
-                .foregroundColor(.gray)
+            // Text Content
+            VStack(spacing: 16) {
+                Text(title)
+                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+                
+                Text(description)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.gray)
+                    .padding(.horizontal, 40)
+                    .lineSpacing(6) // Improved readability
+            }
+            
+            Spacer()
+            Spacer()
         }
-        .padding()
     }
 }
