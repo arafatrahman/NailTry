@@ -35,7 +35,33 @@ struct HomeView: View {
                         })
                     }
                     
-                    // 2. Dynamic Categories
+                    // 2. Custom Design Banner (NEW)
+                    // Allows user to upload a style reference & try it on
+                    NavigationLink(destination: CustomDesignView()) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Design Your Own")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                Text("Upload a style reference & try it on")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
+                            Spacer()
+                            Image(systemName: "paintpalette.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(
+                            LinearGradient(colors: [.orange, .pink], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .cornerRadius(16)
+                        .padding(.horizontal, 20)
+                        .shadow(color: .pink.opacity(0.3), radius: 8, x: 0, y: 4)
+                    }
+                    
+                    // 3. Dynamic Categories
                     VStack(spacing: 25) {
                         if dataService.designs.isEmpty {
                             ProgressView()
@@ -198,14 +224,27 @@ struct CategoryRow: View {
                 
                 Spacer()
                 
+                // UPDATED: Gradient "See All" Button
                 Button(action: {}) {
                     HStack(spacing: 4) {
                         Text("See All")
+                            .fontWeight(.semibold)
                         Image(systemName: "chevron.right")
                             .font(.system(size: 10, weight: .bold))
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .font(.caption)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 12)
+                    .background(
+                        LinearGradient(
+                            colors: [.pink, .purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .clipShape(Capsule())
+                    .shadow(color: .pink.opacity(0.3), radius: 4, x: 0, y: 2)
                 }
             }
             .padding(.horizontal, 20)

@@ -9,6 +9,8 @@ class GeminiService {
 
     init() {}
 
+    // MARK: - Standard Generation (Predefined Prompt)
+    
     // CHANGED: Added isPremium parameter to control resolution and speed
     func generateNailPreview(originalImage: UIImage, designPrompt: String, isPremium: Bool) async throws -> UIImage {
         
@@ -62,6 +64,77 @@ class GeminiService {
             ]
         ]
 
+        return try await performRequest(requestBody: requestBody, isPremium: isPremium)
+    }
+    
+    // MARK: - Custom Design Generation (Image Reference)
+    
+    func generateCustomNailPreview(handImage: UIImage, styleImage: UIImage, isPremium: Bool) async throws -> UIImage {
+        
+        let targetResolution: CGFloat = isPremium ? 1024 : 512
+        
+        if !isPremium {
+            print("⏳ Free account: Simulating standard processing speed...")
+            try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
+        }
+        
+        // Resize Both Images
+        guard let resizedHand = handImage.resized(to: targetResolution),
+              let handData = resizedHand.jpegData(compressionQuality: 0.8),
+              let resizedStyle = styleImage.resized(to: 512), // Style reference doesn't need to be huge
+              let styleData = resizedStyle.jpegData(compressionQuality: 0.8) else {
+            throw NSError(domain: "ImageError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to process images"])
+        }
+        
+        let base64Hand = handData.base64EncodedString()
+        let base64Style = styleData.base64EncodedString()
+        
+        // Prompt for Multimodal Input
+        let promptText = """
+        Technical demonstration: Apply a virtual nail polish design.
+        Input 1: A photo of a hand (target).
+        Input 2: A reference image of a nail design (source).
+        Task: Apply the design/pattern/color/texture shown in Input 2 onto the fingernails in Input 1.
+        Requirements:
+        - Maintain the exact lighting, skin tone, and structure of the hand in Input 1.
+        - Only modify the nail surface.
+        - Make it look photorealistic and natural.
+        """
+        
+        let requestBody: [String: Any] = [
+            "contents": [
+                [
+                    "parts": [
+                        ["text": promptText],
+                        [
+                            "inline_data": [
+                                "mime_type": "image/jpeg",
+                                "data": base64Hand
+                            ]
+                        ],
+                        [
+                            "inline_data": [
+                                "mime_type": "image/jpeg",
+                                "data": base64Style
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            "safetySettings": [
+                ["category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_ONLY_HIGH"],
+                ["category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_ONLY_HIGH"],
+                ["category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_ONLY_HIGH"],
+                ["category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_ONLY_HIGH"]
+            ]
+        ]
+        
+        return try await performRequest(requestBody: requestBody, isPremium: isPremium)
+    }
+
+    // MARK: - Internal Network Helper
+    
+    private func performRequest(requestBody: [String: Any], isPremium: Bool) async throws -> UIImage {
         // 5. URL Request
         guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/\(modelName):generateContent?key=\(apiKey)") else {
             throw NSError(domain: "NetworkError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid API URL"])
