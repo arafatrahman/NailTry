@@ -56,6 +56,7 @@ struct ProfileView: View {
                             // Bullet points
                             VStack(alignment: .leading, spacing: 5) {
                                 BenefitPoint(text: "Unlimited AI Try-On generations")
+                                BenefitPoint(text: "Upload your own custom styles") // Added Feature
                                 BenefitPoint(text: "Access to exclusive seasonal designs")
                                 BenefitPoint(text: "High-resolution downloads")
                                 BenefitPoint(text: "Priority processing speed")
@@ -123,6 +124,7 @@ struct PremiumView: View {
             
             VStack(alignment: .leading, spacing: 15) {
                 FeatureRow(icon: "infinity", text: "Unlimited Styles")
+                FeatureRow(icon: "paintpalette.fill", text: "Design Your Own (Upload)") // Added Feature
                 FeatureRow(icon: "bolt.fill", text: "Fast AI Generation")
                 FeatureRow(icon: "star.fill", text: "Exclusive Designs")
             }

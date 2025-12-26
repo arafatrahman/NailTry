@@ -9,6 +9,9 @@ struct HomeView: View {
     // Controls the "Go Premium" popup
     @State private var showPremiumSheet = false
     
+    // Controls navigation to Custom Design View
+    @State private var navigateToCustomDesign = false
+    
     // Group designs by category
     var designsByCategory: [String: [NailDesign]] {
         Dictionary(grouping: dataService.designs, by: { $0.category })
@@ -18,7 +21,7 @@ struct HomeView: View {
         designsByCategory.keys.sorted()
     }
     
-    // UPDATED: Filter logic to show only designs where isFeatured == true
+    // Filter logic to show only designs where isFeatured == true
     var featuredDesigns: [NailDesign] {
         dataService.designs.filter { $0.isFeatured ?? false }
     }
@@ -35,15 +38,31 @@ struct HomeView: View {
                         })
                     }
                     
-                    // 2. Custom Design Banner (NEW)
-                    // Allows user to upload a style reference & try it on
-                    NavigationLink(destination: CustomDesignView()) {
+                    // 2. Custom Design Banner (Restricted to Premium)
+                    Button(action: {
+                        if authService.isPremium {
+                            navigateToCustomDesign = true
+                        } else {
+                            // Block access and show upsell
+                            showPremiumSheet = true
+                        }
+                    }) {
                         HStack {
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Design Your Own")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("Upload a style reference & try it on")
+                                HStack {
+                                    Text("Design Your Own")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                    
+                                    // Show Crown if locked
+                                    if !authService.isPremium {
+                                        Image(systemName: "crown.fill")
+                                            .foregroundColor(.yellow)
+                                            .font(.subheadline)
+                                    }
+                                }
+                                
+                                Text(authService.isPremium ? "Upload a style reference & try it on" : "Upgrade to upload your own styles")
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.8))
                             }
@@ -60,6 +79,14 @@ struct HomeView: View {
                         .padding(.horizontal, 20)
                         .shadow(color: .pink.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
+                    // Hidden Navigation Link triggered by state
+                    .background(
+                        NavigationLink(isActive: $navigateToCustomDesign, destination: {
+                            CustomDesignView()
+                        }) {
+                            EmptyView()
+                        }
+                    )
                     
                     // 3. Dynamic Categories
                     VStack(spacing: 25) {
@@ -102,9 +129,9 @@ struct HeroCarousel: View {
     var onRequestPremium: () -> Void
     @EnvironmentObject var authService: AuthService
     
-    // UPDATED: State for auto-sliding
+    // State for auto-sliding
     @State private var currentIndex = 0
-    // UPDATED: Timer publisher for 2-second intervals
+    // Timer publisher for 2-second intervals
     private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -132,7 +159,7 @@ struct HeroCarousel: View {
             UIPageControl.appearance().currentPageIndicatorTintColor = .white
             UIPageControl.appearance().pageIndicatorTintColor = UIColor.white.withAlphaComponent(0.3)
         }
-        // UPDATED: Receive timer events to change the index
+        // Receive timer events to change the index
         .onReceive(timer) { _ in
             withAnimation {
                 // Determine next index, loop back to 0 if at the end
@@ -224,7 +251,7 @@ struct CategoryRow: View {
                 
                 Spacer()
                 
-                // UPDATED: Gradient "See All" Button
+                // Gradient "See All" Button
                 Button(action: {}) {
                     HStack(spacing: 4) {
                         Text("See All")
