@@ -8,6 +8,7 @@ struct SettingsView: View {
     @AppStorage("useFaceID") private var useFaceID = false
     
     @State private var showingClearCacheAlert = false
+    @State private var showingSeedAlert = false
     
     var body: some View {
         NavigationView {
@@ -21,6 +22,30 @@ struct SettingsView: View {
                     Toggle(isOn: $notificationsEnabled) {
                         Label("Notifications", systemImage: "bell.fill")
                             .foregroundColor(.red)
+                    }
+                }
+                
+                // MARK: - Data & Storage
+                Section(header: Text("Data & Storage")) {
+                    Button(action: {
+                        clearAppCache()
+                        showingClearCacheAlert = true
+                    }) {
+                        Label("Clear Cache & Data", systemImage: "trash.fill")
+                            .foregroundColor(.orange)
+                    }
+                }
+
+                // MARK: - Admin / Developer Tools
+                // Only use this to upload data, then you can remove this section or hide it
+                Section(header: Text("Admin Tools")) {
+                    Button(action: {
+                        // Calls the script from the separate file you created
+                        DatabaseSeeder.shared.uploadTrendyDesigns()
+                        showingSeedAlert = true
+                    }) {
+                        Label("Upload Trendy Styles", systemImage: "icloud.and.arrow.up.fill")
+                            .foregroundColor(.blue)
                     }
                 }
                 
@@ -38,17 +63,6 @@ struct SettingsView: View {
                     }) {
                         Label("Rate NailTry", systemImage: "star.fill")
                             .foregroundColor(.yellow)
-                    }
-                }
-                
-                // MARK: - Data
-                Section(header: Text("Data & Storage")) {
-                    Button(action: {
-                        clearAppCache()
-                        showingClearCacheAlert = true
-                    }) {
-                        Label("Clear Cache & Data", systemImage: "trash.fill")
-                            .foregroundColor(.orange)
                     }
                 }
                 
@@ -73,10 +87,16 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .listStyle(InsetGroupedListStyle())
+            // Alerts
             .alert("Cache Cleared", isPresented: $showingClearCacheAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
                 Text("Local images and temporary data have been successfully deleted.")
+            }
+            .alert("Upload Started", isPresented: $showingSeedAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("The script is running in the background. Check your Xcode console or restart the app to see the new designs.")
             }
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)

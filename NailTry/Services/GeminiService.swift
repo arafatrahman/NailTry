@@ -9,9 +9,8 @@ class GeminiService {
 
     init() {}
 
-    // MARK: - Standard Generation (Predefined Prompt)
+    // MARK: - Standard Generation (Text Prompt)
     
-    // CHANGED: Added isPremium parameter to control resolution and speed
     func generateNailPreview(originalImage: UIImage, designPrompt: String, isPremium: Bool) async throws -> UIImage {
         
         // 1. Resolution & Speed Logic
@@ -19,7 +18,6 @@ class GeminiService {
         let targetResolution: CGFloat = isPremium ? 1024 : 512
         
         // Free: Simulate "Standard" processing queue (Slower)
-        // Premium: "Priority" processing (Instant)
         if !isPremium {
             print("⏳ Free account: Simulating standard processing speed...")
             try? await Task.sleep(nanoseconds: 2 * 1_000_000_000) // 2 second delay
@@ -33,12 +31,26 @@ class GeminiService {
         
         let base64Image = jpegData.base64EncodedString()
 
-        // 3. Prompt
+        // 3. Advanced Prompt Engineering (The "Brain")
         let promptText = """
-        Technical demonstration: Apply a virtual nail polish design.
-        Input: A photo of a hand.
-        Task: Change the nail polish to: \(designPrompt).
-        Requirements: Keep the image photorealistic. Preserve the original hand structure.
+        Role: Expert VFX Artist & Digital Beauty Retoucher.
+        Task: Apply a photorealistic virtual nail polish overlay to the user's hand.
+        
+        Input Data:
+        - Image: A photograph of a hand.
+        - Design Request: "\(designPrompt)"
+        
+        Strict Execution Guidelines:
+        1. **Precision Masking**: Identify the fingernail plates with pixel-perfect accuracy. DO NOT alter the cuticles, skin tone, fingers, or background.
+        2. **Physics & Lighting**: You MUST preserve the original lighting environment. Keep the original specular highlights (glossy reflections) and shadows on the nails to ensure they look physically present in the scene.
+        3. **Texture Rendering**:
+           - If the design is "Chrome" or "Metallic": Render high-contrast reflections and a liquid-metal surface.
+           - If the design is "Velvet" or "Cat Eye": Simulate the deep, shifting shimmer of magnetic polish.
+           - If the design is "Glossy": Ensure a wet, glass-like finish.
+           - If the design is "Matte": Remove specular highlights and add a soft, diffused texture.
+        4. **Perspective**: Wrap the pattern/color naturally around the 3D curvature of each nail.
+        
+        Output: The original image with ONLY the nail polish changed. Realism is the highest priority.
         """
         
         // 4. Request Body
@@ -89,16 +101,20 @@ class GeminiService {
         let base64Hand = handData.base64EncodedString()
         let base64Style = styleData.base64EncodedString()
         
-        // Prompt for Multimodal Input
+        // Advanced Multimodal Prompt
         let promptText = """
-        Technical demonstration: Apply a virtual nail polish design.
-        Input 1: A photo of a hand (target).
-        Input 2: A reference image of a nail design (source).
-        Task: Apply the design/pattern/color/texture shown in Input 2 onto the fingernails in Input 1.
-        Requirements:
-        - Maintain the exact lighting, skin tone, and structure of the hand in Input 1.
-        - Only modify the nail surface.
-        - Make it look photorealistic and natural.
+        Role: Expert AI Stylist.
+        Task: Perform a "Style Transfer" for nail art.
+        
+        Inputs:
+        1. Target Image: A photo of a hand.
+        2. Reference Image: A photo showing a specific nail design (color, pattern, texture).
+        
+        Directives:
+        - Analyze the Reference Image (Input 2) to extract the nail art style (color palette, finish, pattern).
+        - Apply this exact style onto the fingernails of the Target Image (Input 1).
+        - **Constraint**: Maintain the lighting, skin tone, and hand structure of Input 1 exactly as they are. Only the nail surface should change.
+        - Ensure the new design follows the curvature of the nails in Input 1 naturally.
         """
         
         let requestBody: [String: Any] = [
