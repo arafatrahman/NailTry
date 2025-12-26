@@ -40,8 +40,8 @@ struct SettingsView: View {
                 // Only use this to upload data, then you can remove this section or hide it
                 Section(header: Text("Admin Tools")) {
                     Button(action: {
-                        // Calls the script from the separate file you created
-                        DatabaseSeeder.shared.uploadTrendyDesigns()
+                        // FIX: Changed from uploadTrendyDesigns() to uploadAll() to match DatabaseSeeder.swift
+                        DatabaseSeeder.shared.uploadAll()
                         showingSeedAlert = true
                     }) {
                         Label("Upload Trendy Styles", systemImage: "icloud.and.arrow.up.fill")
