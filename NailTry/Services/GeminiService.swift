@@ -34,7 +34,7 @@ class GeminiService {
         // 3. Advanced Prompt Engineering (The "Brain")
         let promptText = """
         Role: Expert VFX Artist & Digital Beauty Retoucher.
-        Task: Apply a photorealistic virtual nail polish overlay to the user's hand.
+        Task: Apply a photorealistic virtual nail makeover (including polish, nail art, or extensions) to the user's hand.
         
         Input Data:
         - Image: A photograph of a hand.
@@ -43,14 +43,10 @@ class GeminiService {
         Strict Execution Guidelines:
         1. **Precision Masking**: Identify the fingernail plates with pixel-perfect accuracy. DO NOT alter the cuticles, skin tone, fingers, or background.
         2. **Physics & Lighting**: You MUST preserve the original lighting environment. Keep the original specular highlights (glossy reflections) and shadows on the nails to ensure they look physically present in the scene.
-        3. **Texture Rendering**:
-           - If the design is "Chrome" or "Metallic": Render high-contrast reflections and a liquid-metal surface.
-           - If the design is "Velvet" or "Cat Eye": Simulate the deep, shifting shimmer of magnetic polish.
-           - If the design is "Glossy": Ensure a wet, glass-like finish.
-           - If the design is "Matte": Remove specular highlights and add a soft, diffused texture.
-        4. **Perspective**: Wrap the pattern/color naturally around the 3D curvature of each nail.
+        3. **Texture Rendering**: Dynamically adapt the surface finish to match the exact design requested. Whether the style is chrome, velvet, matte, glossy, jelly, or features 3D nail art/embellishments, you must simulate the appropriate physical material properties (specularity, roughness, and depth) for that specific design.
+        4. **Perspective**: Wrap the pattern, color, or art naturally around the 3D curvature of each nail.
         
-        Output: The original image with ONLY the nail polish changed. Realism is the highest priority.
+        Output: The original image with ONLY the nail aesthetics transformed. Realism is the highest priority.
         """
         
         // 4. Request Body
