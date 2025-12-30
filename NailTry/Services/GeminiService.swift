@@ -31,22 +31,21 @@ class GeminiService {
         
         let base64Image = jpegData.base64EncodedString()
 
-        // 3. Advanced Prompt Engineering (The "Brain")
+        // 3. Unified Style DNA Prompt (Texture Engine)
         let promptText = """
-        Role: Expert VFX Artist & Digital Beauty Retoucher.
-        Task: Apply a photorealistic virtual nail makeover (including polish, nail art, or extensions) to the user's hand.
+        Role: AI Texture Engine & Digital Manicurist.
+        Task: Render specific material properties onto fingernails while strictly preserving the source environment.
         
-        Input Data:
-        - Image: A photograph of a hand.
-        - Design Request: "\(designPrompt)"
+        Input Analysis:
+        - Source Image: User's hand photo (contains fixed lighting, skin tone, and perspective).
+        - Material DNA: "\(designPrompt)"
         
-        Strict Execution Guidelines:
-        1. **Precision Masking**: Identify the fingernail plates with pixel-perfect accuracy. DO NOT alter the cuticles, skin tone, fingers, or background.
-        2. **Physics & Lighting**: You MUST preserve the original lighting environment. Keep the original specular highlights (glossy reflections) and shadows on the nails to ensure they look physically present in the scene.
-        3. **Texture Rendering**: Dynamically adapt the surface finish to match the exact design requested. Whether the style is chrome, velvet, matte, glossy, jelly, or features 3D nail art/embellishments, you must simulate the appropriate physical material properties (specularity, roughness, and depth) for that specific design.
-        4. **Perspective**: Wrap the pattern, color, or art naturally around the 3D curvature of each nail.
+        Execution Rules:
+        1. **Material Synthesis**: Generate the texture defined in 'Material DNA' (e.g., gloss, opacity, metallic flecks, gradient) with photo-real accuracy.
+        2. **Environmental Integration**: Do NOT generate new lighting. You must map the 'Material DNA' into the *existing* lighting of the Source Image. Specular highlights (reflections) and shadows must match the original photo exactly to maintain physical consistency.
+        3. **Strict Masking**: Identify the nail plates with pixel-perfect precision. Do not alter cuticles, skin, fingers, or background.
         
-        Output: The original image with ONLY the nail aesthetics transformed. Realism is the highest priority.
+        Output: The Source Image with ONLY the new Material DNA applied to the nails.
         """
         
         // 4. Request Body

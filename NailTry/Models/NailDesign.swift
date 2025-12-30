@@ -9,36 +9,35 @@ struct NailDesign: Identifiable, Codable, Hashable {
     let imageUrl: String
     let prompt: String
     let isPremium: Bool
-    // New field: Optional to ensure backward compatibility with existing data
     let isFeatured: Bool?
     
-    // Testing data for when Firebase is empty
+    // MARK: - Sample Data for Testing/Preview
     static let samples = [
         NailDesign(
             id: "1",
-            name: "Classic Red",
-            category: "Classic",
+            name: "Pure Milk",
+            category: "Milky & Soap",
             imageUrl: "https://placehold.co/400x400/png",
-            prompt: "glossy red nail polish",
+            prompt: "Milky White Gel. Texture: Semi-sheer, creamy white.",
             isPremium: false,
             isFeatured: true
         ),
         NailDesign(
             id: "2",
+            name: "Soap Pink",
+            category: "Milky & Soap",
+            imageUrl: "https://placehold.co/400x400/png",
+            prompt: "Soap Pink. Color: Very pale, translucent baby pink.",
+            isPremium: false,
+            isFeatured: true
+        ),
+        NailDesign(
+            id: "3",
             name: "Gold Glitter",
             category: "Glam",
             imageUrl: "https://placehold.co/400x400/png",
             prompt: "gold glitter ombre nail polish",
             isPremium: true,
-            isFeatured: true
-        ),
-        NailDesign(
-            id: "3",
-            name: "Matte Black",
-            category: "Classic",
-            imageUrl: "https://placehold.co/400x400/png",
-            prompt: "matte black nail polish",
-            isPremium: false,
             isFeatured: false
         )
     ]
